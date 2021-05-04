@@ -28,9 +28,10 @@ public class TktSystem{
         this.tktSold = 0;
 
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        this.openTime = "8:00:00";
-        this.closeTime = "21:00:00";
-
+        // this.openTime = "8:00:00";
+        // this.closeTime = "21:00:00";
+        this.openTime = "00:00:00";
+        this.closeTime = "09:00:00";
     }
 
     // maybe we will change this void to a class "Ticket"
@@ -91,8 +92,10 @@ public class TktSystem{
     // this is to check Can customer buy ticket at now(is it in the time range 8:00-5:00)
     public boolean isNowTime_in_period(){
         if (isTimeWith_in_Interval((LocalTime.now()).format(formatter),openTime,closeTime)) {
+            // System.out.println("hi this works");
             return true;
         } else {
+            
             return false;
         }
     }
@@ -109,6 +112,7 @@ public class TktSystem{
             if (time1.before(d) && time2.after(d)) {
                 isBetween = true;
             }
+            
         } catch (ParseException e) {
             e.printStackTrace();
         }

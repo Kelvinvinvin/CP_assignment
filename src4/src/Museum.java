@@ -51,11 +51,10 @@ public class Museum {
         this.curVisitor = 0;
 
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        this.openTime = "9:00:00";
-        this.closeTime = "21:00:00";
-
-
-
+        // this.openTime = "9:00:00";
+        // this.closeTime = "21:00:00";
+        this.openTime = "00:00:00";
+        this.closeTime = "09:00:00";
     }
     public int getCurVisitor() {
         return curVisitor;
