@@ -19,7 +19,7 @@ public class Museum {
 
 
 
-    MuseumControl(int arrivalTime){
+    Museum(int arrivalTime){
 		this.capacity=900;
 		this.curMax=100;
 		this.curVistor=0;
