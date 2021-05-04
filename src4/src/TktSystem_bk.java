@@ -1,7 +1,3 @@
-// 1. this class is for helping visitors to purchase tickets
-
-// 2. compared with "Mobile App",
-// it's better we call it "official website" for purchasing
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,15 +6,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
 
-// 3. it is a common resource I think,
-// so dont need to extends thread(runnable).
 public class TktSystem_bk{
     private Museum_bk museum;
     private DateTimeFormatter formatter;
     private int tktSold;
 
-    // I have wrote a method called getIsOpen() from Museum class
-    // I'm not sure do we still need the open and close time in PurMobileApp class
     private String openTime;
     private String closeTime;
 
@@ -30,12 +22,9 @@ public class TktSystem_bk{
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
          this.openTime = "8:00:00";
          this.closeTime = "21:00:00";
-//        this.openTime = "00:00:00";
-//        this.closeTime = "09:00:00";
+
     }
 
-    // maybe we will change this void to a class "Ticket"
-    // because Ticket is a real object with timestamps
     public synchronized String buyTicket() {
         Random r = new Random();
         int buyTckDuration = r.nextInt(3000)+1000;
@@ -47,10 +36,7 @@ public class TktSystem_bk{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            System.out.println("Sold a new ticket, today's sales num: " + this.tktSold);
 
-            // we still need to create a real ticket with a timestamps
-            // some code()
 
             String postfix = getPostfix();
             timestamp = "T" + postfix;
@@ -80,8 +66,7 @@ public class TktSystem_bk{
     }
 
     public boolean isValid_ToBuyTicket() {
-        // current sold ticket number < maximum number(900) AND museum is open,
-        // then customer could buy ticket, this function will return TURE
+ 
         if (this.tktSold < this.museum.getMaxVisit() && isNowTime_in_period()) {
             return true;
         } else {
@@ -89,7 +74,6 @@ public class TktSystem_bk{
         }
     }
 
-    // this is to check Can customer buy ticket at now(is it in the time range 8:00-5:00)
     public boolean isNowTime_in_period(){
         if (isTimeWith_in_Interval((LocalTime.now()).format(formatter),openTime,closeTime)) {
             // System.out.println("hi this works");

@@ -106,9 +106,21 @@ public class TktSystem implements Runnable{
         return (LocalTime.now()).format(formatter);
     }
     
-    @Override
+    public int gettktSold() {
+    	return tktSold;
+    }
+
+
+	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
+    
 }
+
+//class ticket extends Thread{
+//	public void run() {
+//		
+//	}
+//}
