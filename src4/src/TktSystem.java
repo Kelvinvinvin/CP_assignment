@@ -12,36 +12,30 @@ public class TktSystem implements Runnable{
     private int tktSold;
     private String openTime;
     private String closeTime;
+    private volatile LocalTime batch_time;
 
 
-    public TktSystem(Museum m) {
+    public TktSystem(Museum m, LocalTime batch_time) {
         this.museum = m;
         this.tktSold = 0;
-
+        this.batch_time = batch_time;
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "8:00:00";
         this.closeTime = "21:00:00";
     }
 
 
-    public synchronized String buyTicket() {
-        Random r = new Random();
-        int buyTckDuration = r.nextInt(3000)+1000;
+	public void buyTicket() {
+
         String timestamp = "NULL";
         if (isValid_ToBuyTicket()) {
             this.tktSold += 1;
-            try {
-                Thread.sleep(buyTckDuration);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             String postfix = getPostfix();
             timestamp = "T" + postfix;
-            return timestamp;
-
+            System.out.println(batch_time + " Ticket: " + timestamp + " sold");
         }else{
             System.out.println("Your ticket request denied!");
-            return timestamp;
+     
         }
 
     }
@@ -113,14 +107,11 @@ public class TktSystem implements Runnable{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+//		System.out.println(Thread.currentThread().getName() + " has entered");
+		buyTicket();
 		
 	}
     
 }
 
-//class ticket extends Thread{
-//	public void run() {
-//		
-//	}
-//}
+

@@ -10,11 +10,9 @@ public class Museum {
     private String closeTime;
     DateTimeFormatter formatter;
 
-
     //for daily maximum visitors limitation
     private int maxVisit;
     private int curMaxVisit;
-
 
     //for current visitor count
     private int curVisitor;
@@ -24,10 +22,8 @@ public class Museum {
     public Museum() {
         this.maxVisit = 900;
         this.curMaxVisit = 100;
-
         this.maxVisitor = 0;
         this.curVisitor = 0;
-
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "9:00:00";
         this.closeTime = "21:00:00";

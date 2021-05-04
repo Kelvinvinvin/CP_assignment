@@ -13,24 +13,22 @@ public class Driver {
     public static void main(String[] args) {
         Museum museum = new Museum();
         Random rand = new Random(); 
-        TktSystem ts = new TktSystem(museum);
+        TktSystem ts = new TktSystem(museum, LocalTime.now());
         
         int ticket_times = 1+rand.nextInt(4); // buy random number of ticket
         int subsequent_times = 1+rand.nextInt(4); // buy random number of ticket
-        System.out.println(ticket_times);
-        System.out.println(subsequent_times);
         
         ExecutorService executorService = Executors.newCachedThreadPool();
         while (ts.isValid_ToBuyTicket() && ts.gettktSold() <= 900 ){
         	for (int i=1; i<=ticket_times; i++) {
         		if(ts.isValid_ToBuyTicket()) {
-            		ts = new TktSystem(museum);
+            		ts = new TktSystem(museum, LocalTime.now());
             		executorService.execute(ts);
-            		System.out.println("hi");
+//            		System.out.println("hi");
             	}
         	}
         	try {
-        		System.out.println("sleep for "+ subsequent_times*1000);
+        		System.out.println("Subsequent purchase will be made after "+ subsequent_times*1000);
 				Thread.sleep(subsequent_times*1000); // to simulate subsequent purchase
 				ticket_times = 1+rand.nextInt(4);
 				subsequent_times = 1+rand.nextInt(4);
