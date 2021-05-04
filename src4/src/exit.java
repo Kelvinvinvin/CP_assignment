@@ -1,5 +1,6 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class exit implements Runnable {
 	final int max = 4;
@@ -16,15 +17,15 @@ public class exit implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			if (current_no <= max) {
-				change_current_no();
+			if (current_no <= max) {	
 				try {
+					increase_current_no();
 					Thread.sleep(500);
 					System.out.println(Thread.currentThread().getId() + " is using this exit");
+					decrease_current_no();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//notify all the thread that waits
 				
 			}else {
 				//wait code here
@@ -32,9 +33,17 @@ public class exit implements Runnable {
 		}
 	}
 	
-	public void change_current_no() {
+	public void increase_current_no() throws InterruptedException {
 		lock.lock();
+		condition.await(); // wait other from using this door
 		current_no++;
+		lock.unlock();
+	}
+	
+	public void decrease_current_no() throws InterruptedException {
+		lock.lock();
+		current_no--;
+		condition.signalAll(); // wait other from using this door
 		lock.unlock();
 	}
 }
