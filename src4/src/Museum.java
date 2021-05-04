@@ -11,36 +11,19 @@ public class Museum {
     private String closeTime;
     DateTimeFormatter formatter;
 
+       //for daily maximum visitors limitation
+    private int maxVisit;
+    private int curMaxVisit;
+    private int curVisitor;
+   
 
     private int capacity,curMax,curVistor;
 	public static boolean canEnter = false;
 	public static boolean canExit = false;
 	public long duration,arrivalTime,leaveTime;
 
-
-
-    Museum(int arrivalTime){
-		this.capacity=900;
-		this.curMax=100;
-		this.curVistor=0;
-		this.duration=getVistorTime();
-		this.leaveTime=getLeavelTime();
-		this.arrivalTime=arrivalTime;
-		
-	}
-	
-
-    //for daily maximum visitors limitation
-    private int maxVisit;
-    private int curMaxVisit;
-
-
-    //for current visitor count
-    private int curVisitor;
-    private int maxVisitor;
-
     
-    public Museum() {
+    public Museum(String arrivalTime) {
         this.maxVisit = 900;
         this.curMaxVisit = 100;
 
@@ -50,7 +33,9 @@ public class Museum {
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "9:00:00";
         this.closeTime = "21:00:00";
-
+        this.duration=getVistorTime();
+		this.leaveTime=getLeavelTime();
+		this.arrivalTime=arrivalTime;	
     }
     
     public int getCurVisitor() {

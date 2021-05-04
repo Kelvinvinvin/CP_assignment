@@ -1,53 +1,49 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
+import java.time.LocalTime;
+import java.sql.Time;
 
 
 public class TktSystem implements Runnable{
     private Museum museum;
+    private entrance entrance;
     private DateTimeFormatter formatter;
-    private int tktSold;
-    private String openTime;
-    private String closeTime;
-    private volatile LocalTime batch_time;
+    private int tktSold,tkTime;
+    private String openTime,closeTime;
+    private String ticketId;
+    private Time buyTime;
 
 
-    public TktSystem(Museum m, LocalTime batch_time) {
+    public TktSystem(Museum m) {
         this.museum = m;
         this.tktSold = 0;
-        this.batch_time = batch_time;
+        this.ticketId="";
+        this.buyTime=Time.valueOf("08:00:00");
+        this.tkTime=0;
+        
+     
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "8:00:00";
         this.closeTime = "21:00:00";
     }
 
-
 	public void buyTicket() {
-
-        String timestamp = "NULL";
         if (isValid_ToBuyTicket()) {
+            this.buyTime=getCurTime();
+            this.tkTime=getCurTime();
             this.tktSold += 1;
-            String postfix = getPostfix();
-            timestamp = "T" + postfix;
-            System.out.println(batch_time + " Ticket: " + timestamp + " sold");
+            String ticketId="T"+String.format("%04d", this.tktSold);
+            System.out.println(this.buyTime + " Ticket: " + ticketId + " sold");
+
         }else{
             System.out.println("Your ticket request denied!");
-     
         }
-
     }
-
-
-    	
-	public String getTicketId(int num) {
-        int temPostfix = this.tktSold;
-		ticketId=String.format("%04d", temPostfix);
-        return postfix;
-	}
-
+	
     public boolean isValid_ToBuyTicket() {
         // current sold ticket number < maximum number(900) AND museum is open,
         // then customer could buy ticket, this function will return TURE
@@ -64,7 +60,6 @@ public class TktSystem implements Runnable{
             // System.out.println("hi this works");
             return true;
         } else {
-            
             return false;
         }
     }
@@ -88,7 +83,8 @@ public class TktSystem implements Runnable{
         return isBetween;
     }
 
-    public String getCurTime(){
+    public String getSoldTime(){
+
         return (LocalTime.now()).format(formatter);
     }
     
@@ -96,14 +92,29 @@ public class TktSystem implements Runnable{
     	return tktSold;
     }
 
+    public String getCurTime(){
 
-	@Override
-	public void run() {
-//		System.out.println(Thread.currentThread().getName() + " has entered");
-		buyTicket();
-		
-	}
+        return (LocalTime.now()).format(formatter);
+    }
+
+
+
+
+    @Override
+    public void run() {
+        try {
+            buyTicket();
+            Rnadom random=new Random();
+            int num=random.nextInt(2);
+            if(num==0){
+                entrance=new entrance('S',this.buyTime);
+            }else{
+                entrance=new entrance('N',this.buyTime);
+            }
+            entrance.enterMusem(this);
+        } catch (Exception ex) {
+        }
+    }
     
 }
-
 

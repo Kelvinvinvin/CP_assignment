@@ -19,6 +19,7 @@ public class Driver {
         int subsequent_times = 1+rand.nextInt(4); // buy random number of ticket
         
         ExecutorService executorService = Executors.newCachedThreadPool();
+
         while (ts.isValid_ToBuyTicket() && ts.gettktSold() <= 900 ){
         	for (int i=1; i<=ticket_times; i++) {
         		if(ts.isValid_ToBuyTicket()) {
@@ -27,6 +28,8 @@ public class Driver {
 //            		System.out.println("hi");
             	}
         	}
+       
+
         	try {
         		System.out.println("Subsequent purchase will be made after "+ subsequent_times*1000);
 				Thread.sleep(subsequent_times*1000); // to simulate subsequent purchase
