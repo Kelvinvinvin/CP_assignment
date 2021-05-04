@@ -13,7 +13,7 @@ public class Visitors extends Thread {
         this.tkt_timestamp = "NULL";
         this.canBuyTck = false;
     }
-
+    // baogang halo
     //this method is for purchasing tickets
     public void buyTkt() {
         String ticket_timestamp = this.tktSystem.buyTicket();
