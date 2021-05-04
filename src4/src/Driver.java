@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
     public static void main(String[] args) {
-
+        //baogang
         Museum m = new Museum();
         TktSystem ts = new TktSystem(m);
         Visitors visitors;
@@ -23,16 +23,15 @@ public class Driver {
             executorService.execute(visitors);
             i++;
         }
-        //hi 
         executorService.shutdown();
-        try {
-			if (!executorService.awaitTermination(6000, TimeUnit.MILLISECONDS)){
-			    System.err.println("Threads didn't finish in 60000 seconds!");
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//        try {
+//			if (!executorService.awaitTermination(6000, TimeUnit.MILLISECONDS)){
+//			    System.err.println("Threads didn't finish in 60000 seconds!");
+//			}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
         
 //        w.start();
 //        x.start();

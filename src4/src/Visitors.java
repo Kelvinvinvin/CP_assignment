@@ -113,7 +113,8 @@ public class Visitors extends Thread {
         int stayTime;
         Random r = new Random();
         // you can change this line for sleep time(Time of staying museum)
-        stayTime = r.nextInt(40000) + 10000;
+//        stayTime = r.nextInt(40000) + 10000;
+        stayTime = r.nextInt(400) + 100;
         return stayTime;
     }
 
