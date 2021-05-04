@@ -3,7 +3,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class exit implements Runnable {
-	final int max = 4;
+	final int max = 1;
 	private int current_no = 0;
 	Lock lock;
 	Condition condition;
@@ -26,7 +26,6 @@ public class exit implements Runnable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
 			}else {
 				//wait code here
 			}
@@ -45,5 +44,9 @@ public class exit implements Runnable {
 		current_no--;
 		condition.signalAll(); // wait other from using this door
 		lock.unlock();
+	}
+	
+	public int getCurrent() {
+		return current_no;
 	}
 }
