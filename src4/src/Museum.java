@@ -75,162 +75,18 @@ public class Museum {
         return isBetween;
     }
 
-    public synchronized void EnterSouthEntrance1() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen()){
-            wait();
-        }
-
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through SE turnstile SET-1");
-    }
-
-    public synchronized void EnterSouthEntrance2() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen()){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through SE turnstile SET-2");
-    }
-
-    public synchronized void EnterSouthEntrance3() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen()) {
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through SE turnstile SET-3");
-    }
-
-    public synchronized void EnterSouthEntrance4() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen() ){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through SE turnstile SET-4");
-    }
-
-    public synchronized void EnterNorthEntrance1() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen()){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through NE turnstile SET-1");
-    }
-
-    public synchronized void EnterNorthEntrance2() throws InterruptedException {
-        while (curVisitor >= 100|| !isOpen()){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through NE turnstile SET-2");
-    }
-
-    public synchronized void EnterNorthEntrance3() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen()){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through NE turnstile SET-3");
-    }
-
-    public synchronized void EnterNorthEntrance4() throws InterruptedException {
-        while (curVisitor >= 100 || !isOpen() ){
-            wait();
-        }
-        while (curVisitor < getCurMaxVisit()) {
-            curVisitor++;
-            maxVisitor++;
-        }
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() + " " + "entered through NE turnstile SET-4");
-    }
-
-    public synchronized void QuitEastExit1(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through EE turnstile SET-1");
-    }
-
-    public synchronized void QuitEastExit2(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through EE turnstile SET-2");
-    }
-
-    public synchronized void QuitEastExit3(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through EE turnstile SET-3");
-    }
-
-    public synchronized void QuitEastExit4(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through EE turnstile SET-4");
-    }
-
-    public synchronized void QuitWestExit1(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through WE turnstile SET-1");
-    }
-
-    public synchronized void QuitWestExit2(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through WE turnstile SET-2");
-    }
-
-    public synchronized void QuitWestExit3(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through WE turnstile SET-3");
-    }
-
-    public synchronized void QuitWestExit4(){
-        while (curVisitor > 0) {
-            curVisitor--;
-        }
-        notifyAll();
-        System.out.println(getCurTime() + " " + Thread.currentThread().getName() +" " + "exit through WE turnstile SET-4");
-    }
+   
 
     public String getCurTime(){
         return (LocalTime.now()).format(formatter);
     }
+    
+    //exit 
+    exit QuitEastExit1 = new exit();
+    exit QuitEastExit2 = new exit();
+    exit QuitEastExit3 = new exit();
+    exit QuitEastExit4 = new exit();
+    
 
 }
 

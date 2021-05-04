@@ -31,7 +31,6 @@ public class exit implements Runnable {
 			}
 		}
 	}
-	
 	public void increase_current_no() throws InterruptedException {
 		lock.lock();
 		condition.await(); // wait other from using this door
