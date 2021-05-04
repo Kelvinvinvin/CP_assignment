@@ -28,10 +28,10 @@ public class TktSystem{
         this.tktSold = 0;
 
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        // this.openTime = "8:00:00";
-        // this.closeTime = "21:00:00";
-        this.openTime = "00:00:00";
-        this.closeTime = "09:00:00";
+         this.openTime = "8:00:00";
+         this.closeTime = "21:00:00";
+//        this.openTime = "00:00:00";
+//        this.closeTime = "09:00:00";
     }
 
     // maybe we will change this void to a class "Ticket"

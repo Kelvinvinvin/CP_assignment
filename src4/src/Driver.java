@@ -18,7 +18,7 @@ public class Driver {
         int i = 0;
         ExecutorService executorService = Executors.newCachedThreadPool();
         //Just modify the time here to execute the thread in loop with the time
-        while (i<2){
+        while (i<4){
             visitors = new Visitors(ts,m);
             executorService.execute(visitors);
             i++;
@@ -34,14 +34,10 @@ public class Driver {
 			e.printStackTrace();
 		}
         
-
-
 //        w.start();
 //        x.start();
 //        y.start();
-
 //        System.out.println(ts.buyTicket());
-
 
     }
 }
