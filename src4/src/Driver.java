@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
     public static void main(String[] args) {
-        //baogang
+   
         Museum m = new Museum();
         TktSystem ts = new TktSystem(m);
         Visitors visitors;
