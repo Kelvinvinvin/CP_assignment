@@ -40,21 +40,29 @@ public class TktSystem implements Runnable{
 
     }
 
-    public String getPostfix(){
+    // public String getPostfix(){
+    //     int temPostfix = this.tktSold;
+    //     String postfix = "";
+    //     if (temPostfix < 10) {
+    //         postfix = "000" + temPostfix;
+    //     } else if (temPostfix >= 10 && temPostfix < 100) {
+    //         postfix = "00" + temPostfix;
+    //     } else if (temPostfix >= 100 && temPostfix < 1000) {
+    //         postfix = "0" + temPostfix;
+    //     } else if(temPostfix >= 1000){
+    //         // this is not possible because everyday's limit is 999
+    //         postfix = ""+temPostfix;
+    //     }
+    //     return postfix;
+    // }
+
+
+    	
+	public String getTicketId(int num) {
         int temPostfix = this.tktSold;
-        String postfix = "";
-        if (temPostfix < 10) {
-            postfix = "000" + temPostfix;
-        } else if (temPostfix >= 10 && temPostfix < 100) {
-            postfix = "00" + temPostfix;
-        } else if (temPostfix >= 100 && temPostfix < 1000) {
-            postfix = "0" + temPostfix;
-        } else if(temPostfix >= 1000){
-            // this is not possible because everyday's limit is 999
-            postfix = ""+temPostfix;
-        }
+		ticketId=String.format("%04d", temPostfix);
         return postfix;
-    }
+	}
 
     public boolean isValid_ToBuyTicket() {
         // current sold ticket number < maximum number(900) AND museum is open,
