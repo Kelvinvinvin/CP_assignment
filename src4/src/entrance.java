@@ -45,7 +45,7 @@ public class entrance implements Runnable{
 				enterCondition.await();
 				
 			}
-			if(!eq.isEmpty()&&eq!=null) {
+			if(!eq.isEmpty()&&eq!=null && current==0 ) {
 					current++;
 					this.stayDuration = (50+rand.nextInt(101));
 					nameTicket = eq.remove();
