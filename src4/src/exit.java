@@ -1,51 +1,25 @@
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import assignmnet.ticketSystem.Ticket;
 
-public class exit implements Runnable {
-	final int max = 1;
-	private int current_no = 0;
-	Lock lock;
-	Condition condition;
+public class exit implements Runnable{
+	private Museum m;
+	String turnstile_name;
+	String ticket_id;
 	
-	public exit() {
-		lock = new ReentrantLock();
-		condition = lock.newCondition();	
+	public exit(Museum m, String turnstile_name, Ticket nameTicket) {
+		this.m = m;
+		this.turnstile_name = turnstile_name;
+		this.ticket_id = nameTicket.getTicketId();
+	}
+	
+	public synchronized void  decreaseVisitor() {
+		m.changeValue("d");
+		System.out.println("\t "+ticket_id + " exited through Turnstile " + turnstile_name);
 	}
 	
 	
-	@Override
+	
 	public void run() {
-		while (true) {
-			if (current_no <= max) {	
-				try {
-					increase_current_no();
-					Thread.sleep(500);
-					System.out.println(Thread.currentThread().getId() + " is using this exit");
-					decrease_current_no();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}else {
-				//wait code here
-			}
-		}
+		decreaseVisitor();
 	}
-	public void increase_current_no() throws InterruptedException {
-		lock.lock();
-		condition.await(); // wait other from using this door
-		current_no++;
-		lock.unlock();
-	}
-	
-	public void decrease_current_no() throws InterruptedException {
-		lock.lock();
-		current_no--;
-		condition.signalAll(); // wait other from using this door
-		lock.unlock();
-	}
-	
-	public int getCurrent() {
-		return current_no;
-	}
+
 }

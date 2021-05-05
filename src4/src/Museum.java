@@ -1,104 +1,62 @@
-import java.text.ParseException;
-import java.util.Random;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Museum {
-    //for daily open time
-    private String openTime;
-    private String closeTime;
-    DateTimeFormatter formatter;
-
-       //for daily maximum visitors limitation
-    private int maxVisit;
-    private int curMaxVisit;
-    private int curVisitor;
-   
-
-    private int capacity,curMax,curVistor;
-	public static boolean canEnter = false;
-	public static boolean canExit = false;
-	public long duration,arrivalTime,leaveTime;
-
+	private volatile int currentVisitor = 0;
+	final int maxVisitor = 100;
+	Lock lock;import java.util.concurrent.locks.Condition;
+    import java.util.concurrent.locks.Lock;
+    import java.util.concurrent.locks.ReentrantLock;
     
-    public Museum(String arrivalTime) {
-        this.maxVisit = 900;
-        this.curMaxVisit = 100;
-
-        this.maxVisitor = 0;
-        this.curVisitor = 0;
-
-        this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        this.openTime = "9:00:00";
-        this.closeTime = "21:00:00";
-        this.duration=getVistorTime();
-		this.leaveTime=getLeavelTime();
-		this.arrivalTime=arrivalTime;	
-    }
-    
-    public int getCurVisitor() {
-        return curVisitor;
-    }
-
-    public int getMaxVisitor() {
-        return maxVisitor;
-    }
-
-    public int getCurMaxVisit() {
-        return curMaxVisit;
-    }
-
-    public int getMaxVisit() {
-        return this.maxVisit;
-    }
-
-    public long getVistorTime() {
-        Random  random=new Random();
-		int duration=random.nextInt(101*60*1000)+(50*60*1000);
-		return duration;
-
-    }
-    
-    public long getLeavelTime() {	
-    	return (this.arrivalTime+getVistorTime());    
-    }
-
-
-    public boolean isOpen() {
-        if (isTimeWith_in_Interval((LocalTime.now()).format(formatter),openTime,closeTime)) {
-            return true;
-        } else {
-            return false;
+    public class Museum {
+        private volatile int currentVisitor = 0;
+        final int maxVisitor = 100;
+        Lock lock;
+        Condition condition;
+        
+        public Museum() {
+            lock = new ReentrantLock();
+            condition = lock.newCondition();
         }
-    }
-
-    public static boolean isTimeWith_in_Interval(String valueToCheck, String startTime, String endTime) {
-        boolean isBetween = false;
-        try {
-            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(startTime);
-
-            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(endTime);
-
-            Date d = new SimpleDateFormat("HH:mm:ss").parse(valueToCheck);
-
-            if (time1.before(d) && time2.after(d)) {
-                isBetween = true;
+    
+        public int changeValue(String n) {
+            lock.lock();
+            if(n == "d") {
+                currentVisitor--;
+            }else if (n == "i") {
+                currentVisitor++;
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+            
+            lock.unlock();
+            return currentVisitor;
         }
-        return isBetween;
+        
+        public int getCurrentVisitor () {
+            return currentVisitor;
+        }
     }
+    
+	Condition condition;
+	
+	public Museum() {
+		lock = new ReentrantLock();
+		condition = lock.newCondition();
+	}
 
-  
-
-    public String getCurTime(){
-        return (LocalTime.now()).format(formatter);
-    }
-
+	public int changeValue(String n) {
+		lock.lock();
+		if(n == "d") {
+			currentVisitor--;
+		}else if (n == "i") {
+			currentVisitor++;
+		}
+		
+		lock.unlock();
+		return currentVisitor;
+	}
+	
+	public int getCurrentVisitor () {
+		return currentVisitor;
+	}
 }
-
-
-
