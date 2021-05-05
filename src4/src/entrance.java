@@ -1,3 +1,4 @@
+
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -13,7 +14,9 @@ public class entrance implements Runnable{
 	private Museum m;
 	Queue<Ticket> eq;
 	Random rand = new Random();
-	
+	final int max = 1;
+	private int current = 0;
+	 
 	ReentrantLock lock = new ReentrantLock();
 	Condition enterCondition = lock.newCondition();
 	Condition leaveCondition = lock.newCondition();
@@ -33,24 +36,26 @@ public class entrance implements Runnable{
 	}
 	
 
-
 	public void executeEnter() throws InterruptedException {
-
-		
 		try {
 			lock.lock();
-			while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null) {
+			
+			while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null ||  current == max) {
 				//Thread.sleep((1+rand.nextInt(2))*1000);
-				enterCondition.await();	
+				enterCondition.await();
+				
 			}
 			if(!eq.isEmpty()&&eq!=null) {
+					current++;
 					this.stayDuration = (50+rand.nextInt(101));
 					nameTicket = eq.remove();
 					m.changeValue("i");
 					System.out.println("\t "+nameTicket.getTicketId()+ " entered through Turnstile " + turnstile_name + " .Staying for " + this.stayDuration + " minutes");
-					enterCondition.signalAll();			
+								
 			}
 		} finally {
+			current--;
+			enterCondition.signal();
 			lock.unlock();
 		}
 	}	
@@ -61,7 +66,7 @@ public class entrance implements Runnable{
 		try {
 			lock.lock();
 			
-				//leaveCondition.signalAll();			
+				enterCondition.signal();			
 				exit eastEntrance1 = new exit(m , "EET1", nameTicket); //create East Exit 1
 				exit eastEntrance2 = new exit(m , "EET2", nameTicket); //create East Exit 2
 				exit eastEntrance3 = new exit(m , "EET3", nameTicket); //create East Exit 3
@@ -122,3 +127,4 @@ public class entrance implements Runnable{
 		}
 	}
 }
+
