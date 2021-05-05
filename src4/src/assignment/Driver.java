@@ -1,11 +1,11 @@
+package assignment;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import assignmnet.ticketSystem.Ticket;
-
+import assignment.ticketSystem.Ticket;
 
 
 public class Driver {

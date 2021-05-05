@@ -1,4 +1,5 @@
-import assignmnet.ticketSystem.Ticket;
+package assignment;
+import assignment.ticketSystem.Ticket;
 
 public class exit implements Runnable{
 	private Museum m;

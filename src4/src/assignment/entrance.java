@@ -1,4 +1,11 @@
+package assignment;
+import assignment.ticketSystem.Ticket;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -6,8 +13,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import assignmnet.ticketSystem.Ticket;
 
 public class entrance implements Runnable{
 //public class entrance{
@@ -20,6 +25,9 @@ public class entrance implements Runnable{
 	ReentrantLock lock = new ReentrantLock();
 	Condition enterCondition = lock.newCondition();
 	Condition leaveCondition = lock.newCondition();
+    private String openTime,closeTime;
+    private DateTimeFormatter formatter;
+
 
 	private volatile int using = 0;
 	final int maxUse = 1; 
@@ -33,13 +41,15 @@ public class entrance implements Runnable{
 		this.turnstile_name = turnstile_name;
 		this.eq = eq;
 		this.stayDuration=0;
+		this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        this.openTime = "09:00:00";
+        this.closeTime = "18:00:00";
 	}
 	
 
 	public void executeEnter() throws InterruptedException {
 		try {
 			lock.lock();
-			
 			while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null ||  current == max) {
 				//Thread.sleep((1+rand.nextInt(2))*1000);
 				enterCondition.await();
@@ -118,6 +128,7 @@ public class entrance implements Runnable{
 	public void run() {
 		
 		try {
+			
 			executeEnter();
 			Thread.sleep(stayDuration*100);
 			executeLeave();
@@ -126,5 +137,32 @@ public class entrance implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean isNowTime_in_period(){
+        if (isTimeWith_in_Interval((LocalTime.now()).format(formatter),openTime,closeTime)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isTimeWith_in_Interval(String valueToCheck, String startTime, String endTime) {
+        boolean isBetween = false;
+        try {
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(startTime);
+
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(endTime);
+
+            Date d = new SimpleDateFormat("HH:mm:ss").parse(valueToCheck);
+
+            if (time1.before(d) && time2.after(d)) {
+                isBetween = true;
+            }
+            
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return isBetween;
+    }
 }
 
