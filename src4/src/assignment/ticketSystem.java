@@ -37,8 +37,8 @@ class ticketSystem implements Runnable{
         
         this.ticketId="";
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        this.openTime = "8:00:00";
-        this.closeTime = "21:00:00";
+        this.openTime = "08:00:00";
+        this.closeTime = "17:00:00";
     }
     
     
@@ -60,8 +60,6 @@ class ticketSystem implements Runnable{
                 return ticketId;
         }
         
-     
-    
         public synchronized Time getSoldTime(){
             Time soldTime=new Time((int) LocalTime.now().getNano());
             return soldTime;
@@ -79,7 +77,6 @@ class ticketSystem implements Runnable{
 		if(this.tktSold < maxTicket && isNowTime_in_period()) {
             int random_num_ticket = 1 + r.nextInt(4); 
            // Time ti=getSoldTime();
-            
            String build="";
            for(int a=0;a<random_num_ticket;a++){
                 this.tktSold++;
@@ -92,7 +89,6 @@ class ticketSystem implements Runnable{
                 }
            }
            System.out.println((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Ticket: " + build+" sold");
-
         }else{
             System.out.println("Your ticket request denied!");
         }

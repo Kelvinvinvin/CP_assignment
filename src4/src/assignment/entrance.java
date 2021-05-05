@@ -53,7 +53,6 @@ public class entrance implements Runnable{
 			while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null ||  current == max) {
 				//Thread.sleep((1+rand.nextInt(2))*1000);
 				enterCondition.await();
-				
 			}
 			if(!eq.isEmpty()&&eq!=null && current==0 ) {
 					current++;
@@ -71,8 +70,6 @@ public class entrance implements Runnable{
 	}	
 	
 	public void executeLeave() throws InterruptedException {
-		
-
 		try {
 			lock.lock();
 			
