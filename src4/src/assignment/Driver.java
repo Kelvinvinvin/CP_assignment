@@ -22,7 +22,7 @@ public class Driver {
         
         ExecutorService executorService = Executors.newCachedThreadPool();
 
-        while (ts.getTicket_sold() <= 900 && ts.isNowTime_in_period() ){
+        while (ts.getTicket_sold() <= 900){
             try {
                 executorService.execute(ts);
 				Thread.sleep(1+r.nextInt(4) * 1000);

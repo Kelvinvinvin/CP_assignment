@@ -41,14 +41,10 @@ class ticketSystem implements Runnable{
         this.closeTime = "17:00:00";
     }
     
-    
-    
-    
    public class Ticket{
 
         private String ticketId;
         private int ticketNum;
-    
     
         public Ticket(int ticketNum) {
             this.ticketNum=ticketNum;

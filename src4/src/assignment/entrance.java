@@ -48,25 +48,27 @@ public class entrance implements Runnable{
 	
 
 	public void executeEnter() throws InterruptedException {
-		try {
-			lock.lock();
-			while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null ||  current == max) {
-				//Thread.sleep((1+rand.nextInt(2))*1000);
-				enterCondition.await();
+		
+			try {
+				lock.lock();
+				while(m.getCurrentVisitor()>=5||eq.isEmpty()||eq==null || current == max) {
+					//Thread.sleep((1+rand.nextInt(2))*1000);
+					enterCondition.await();
+				}
+				if(!eq.isEmpty()&&eq!=null && current==0 ) {
+						current++;
+						this.stayDuration = (50+rand.nextInt(101));
+						nameTicket = eq.remove();
+						m.changeValue("i");
+						System.out.println("\t "+nameTicket.getTicketId()+ " entered through Turnstile " + turnstile_name + " .Staying for " + this.stayDuration + " minutes");
+				}
+			} finally {
+				current--;
+				enterCondition.signal();
+				lock.unlock();
 			}
-			if(!eq.isEmpty()&&eq!=null && current==0 ) {
-					current++;
-					this.stayDuration = (50+rand.nextInt(101));
-					nameTicket = eq.remove();
-					m.changeValue("i");
-					System.out.println("\t "+nameTicket.getTicketId()+ " entered through Turnstile " + turnstile_name + " .Staying for " + this.stayDuration + " minutes");
-								
-			}
-		} finally {
-			current--;
-			enterCondition.signal();
-			lock.unlock();
-		}
+		
+		
 	}	
 	
 	public void executeLeave() throws InterruptedException {
@@ -119,20 +121,22 @@ public class entrance implements Runnable{
 		} finally {
 			lock.unlock();
 		}
-		
 	}
 	
 	public void run() {
-		
-		try {
-			
-			executeEnter();
-			Thread.sleep(stayDuration*100);
-			executeLeave();
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if(isNowTime_in_period()) {
+			try {
+				executeEnter();
+				Thread.sleep(stayDuration*100);
+				executeLeave();
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("Museum Not Yet Open");
 		}
+		
 	}
 	
 	public boolean isNowTime_in_period(){
