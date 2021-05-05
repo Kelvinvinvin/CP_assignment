@@ -1,3 +1,4 @@
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -83,7 +84,6 @@ class ticketSystem implements Runnable{
                 this.tktSold++;
                 Ticket ticket=new Ticket(this.tktSold);
                 ticketQueue.add(ticket);
-
                 if(a<random_num_ticket-1) {
                 	build += (ticket.getTicketId()+ ",");
                 }else {
@@ -210,5 +210,8 @@ class ticketSystem implements Runnable{
         }catch (Exception ex) {
         }
         
-    }    
+    }
+
+
+    
 }
