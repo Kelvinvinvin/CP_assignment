@@ -1,5 +1,7 @@
-package assignment;
-import assignment.ticketSystem.Ticket;
+package assg;
+import assg.ticketSystem.Ticket;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class exit implements Runnable{
 	private Museum m;
@@ -14,7 +16,7 @@ public class exit implements Runnable{
 	
 	public synchronized void  decreaseVisitor() {
 		m.changeValue("d");
-		System.out.println("\t "+ticket_id + " exited through Turnstile " + turnstile_name);
+		System.out.println((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss"))+" "+ticket_id + " exited through Turnstile " + turnstile_name);
 	}
 	
 	

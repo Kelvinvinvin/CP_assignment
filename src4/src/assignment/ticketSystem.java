@@ -1,4 +1,4 @@
-package assignment;
+package assg;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +38,7 @@ class ticketSystem implements Runnable{
         this.ticketId="";
         this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "08:00:00";
-        this.closeTime = "17:00:00";
+        this.closeTime = "24:00:00";
     }
     
    public class Ticket{
@@ -86,7 +86,7 @@ class ticketSystem implements Runnable{
            }
            System.out.println((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Ticket: " + build+" sold");
         }else{
-            System.out.println("Your ticket request denied!");
+            System.out.println((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss"))+" Your ticket request denied!");
         }
     }
  

@@ -1,5 +1,5 @@
-package assignment;
-import assignment.ticketSystem.Ticket;
+package assg;
+import assg.ticketSystem.Ticket;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +43,7 @@ public class entrance implements Runnable{
 		this.stayDuration=0;
 		this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         this.openTime = "09:00:00";
-        this.closeTime = "18:00:00";
+        this.closeTime = "24:00:00";
 	}
 	
 
@@ -60,7 +60,7 @@ public class entrance implements Runnable{
 						this.stayDuration = (50+rand.nextInt(101));
 						nameTicket = eq.remove();
 						m.changeValue("i");
-						System.out.println("\t "+nameTicket.getTicketId()+ " entered through Turnstile " + turnstile_name + " .Staying for " + this.stayDuration + " minutes");
+						System.out.println((LocalTime.now()).format(formatter)+" "+nameTicket.getTicketId()+ " entered through Turnstile " + turnstile_name + ".Staying for " + this.stayDuration + " minutes");
 				}
 			} finally {
 				current--;
@@ -134,7 +134,7 @@ public class entrance implements Runnable{
 				e.printStackTrace();
 			}
 		}else {
-			System.out.println("Museum Not Yet Open");
+			System.out.println((LocalTime.now()).format(formatter)+" Museum Not Yet Open");
 		}
 		
 	}
